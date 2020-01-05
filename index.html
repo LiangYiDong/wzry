@@ -1,138 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>王者荣耀改名</title>
-  <style>
-  *{margin:0;padding:0;}
-  html,body{width:100%;height:100%;position:relative;}
-  .ipt-wrap{width:510px;overflow:hidden;margin:0 auto; padding-top: 60px;}
-  .ipt{width:400px;height:48px;text-align:center;font-size:18px;outline:none;float:left;border:1px solid #38f;}
-  .btn{font-size:18px;height:50px;width:100px;text-align:center;background-color:#38f;color:#FFF;outline:none;border:1px solid #38f;float:left;}
-  .tips{color:#38f;text-align:center;margin:0 auto;padding-top:150px;font-size:18px;}
-  .res-list-wrap{
-    width: 620px;
-    margin: 0 auto;
-    padding-top: 50px;
-    display: none;
-  }
-  .res-list{
-    list-style: none;
-    overflow: hidden;
-  }
-  .res-item{
-    float: left;
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-    color: #38f;
-    border: 1px solid #f1f1f1;
-  }
-  .res-ipt{
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    font-size: 16px;
-    border: none;
-  }
-  .res-tips{
-    color:#333;
-    padding: 20px 0;
-  }
-  em{
-    color: #F00;
-  }
-  </style>
+  	<meta charset="UTF-8">
+  	<title>王者荣耀改名</title>
+  	<style>
+	  	*{margin:0;padding:0;}
+	  	html,body{width:100%;height:100%;position:relative;}
+	  	.ipt-wrap{width:510px;overflow:hidden;margin:0 auto; padding-top: 50px;}
+	  	.ipt{width:400px;height:48px;text-align:center;font-size:16px;outline:none;float:left;border:1px solid #38f;}
+	  	.btn{font-size:18px;height:50px;width:100px;text-align:center;background-color:#38f;color:#FFF;outline:none;border:1px solid #38f;float:left;}
+	  	.tips{color:#38f;text-align:center;margin:0 auto; padding-top:100px; font-size:18px;}
+	  	.time-tips{color:#9c9c9c;text-align:center;margin:0 auto; padding-top:10px; font-size:14px;}
+	  	.res-list-wrap{
+		    width: 620px;
+		    margin: 0 auto;
+		    padding-top: 50px;
+		    display: none;
+	  	}
+	  	.res-list{
+		    list-style: none;
+		    overflow: hidden;
+	  	}
+	  	.res-item{
+		    float: left;
+		    width: 150px;
+		    height: 40px;
+		    line-height: 40px;
+		    color: #38f;
+		    border: 1px solid #f1f1f1;
+		}	
+	  	.res-ipt{
+		    display: block;
+		    width: 100%;
+		    height: 100%;
+		    text-align: center;
+		    font-size: 16px;
+		    border: none;
+	  	}
+	  	.res-tips{
+		    color:#333;
+		    padding: 20px 0;
+	  	}
+		em{
+		    color: #F00;
+		}
+	</style>
 </head>
 <body>
-  <p class="tips">温馨提示: 请不要超过游戏里面规定最大字符长度(6个中文字或者是12个英文字符)</p>
-  <div class="ipt-wrap">
-    <input type="text" class="ipt" placeholder="输入您想改的名字: 如 王思聪" id="Jipt" >
-    <button class="btn" id="Jbtn">确定</button>
-  </div>
-  <div class="res-list-wrap" id="Jres">
-    <p class="res-tips"> 以下是经过特殊处理的名字,每一个都<em>不一样</em> : 选中复制即可</p>
-    <ol class="res-list" id="Jol"></ol>
-  </div>
-  <script>
-    // 工具函数
-    function transfer(str) {
-        str = str.replace(/\\/g, "%");
-        return unescape(str);
-    }
+  	<p class="tips">温馨提示: 重复名(最多5个中文字或者是10个英文字符)</p>
+  	<p class="time-tips">(有效时间至：2020年1月7日 23:59:59)</p>
+  	<div class="ipt-wrap">
+  		<div class='repeat-name' id="repeatBtnWrap">
+	    	<input type="text" class="ipt" placeholder="输入您想改的名字: 如 王思聪; 空白名字不用输入", id="Jipt" >
+	    	<button class="btn" id="Jbtn">确定</button>	
+  		</div>
 
-    function clone(obj){
-      var tmp ;
-      tmp = [];
-      var len = obj.length;
-      for (var i = 0; i < len; i++) {
-        tmp[i]=obj[i];
-      }
-      return tmp;
-    }
+ 	 </div>
+  	<div class="res-list-wrap" id="Jres">
+    	<p class="res-tips"> 以下是经过特殊处理的名字,每一个都<em>不一样</em> : 选中复制即可</p>
+    	<ol class="res-list" id="Jol"></ol>
+  	</div>
+	<script>// 工具函数
+	var wordLength=0;function transfer(str){str=str.replace(/\\/g,"%");return unescape(str)}function clone(obj){var tmp;tmp=[];var len=obj.length;for(var i=0;i<len;i++){tmp[i]=obj[i]}return tmp}function rdIndex(length){return Math.floor(Math.random()*(length))}function gen(v){var o=v.split("");var demand=parseInt((12-wordLength)/2);console.log(demand,"个数");for(var i=0;i<demand;i++){var index=rdIndex(o.length+1);var _clone=clone(spStr);var _pick=_clone.splice(rdIndex(_clone.length),1).toString();o.splice(index,0,_pick);var res=transfer(o.join(""))}console.log("最终值:",res);return res}function getLength(str){var realLength=0,len=str.length,charCode=-1;for(var i=0;i<len;i++){charCode=str.charCodeAt(i);if(charCode>=0&&charCode<=128){realLength+=1}else{realLength+=2}}return realLength}function genEmpty(w){var arr=[];for(var i=0;i<6;i++){var _clone=clone(w);var _pick=_clone.splice(rdIndex(_clone.length),1).toString();arr.push(_pick)}var res=arr.join("");return res}var spStr=["\u2060","\u2061","\u2062","\u2063"];var blankStr={0:["\u2060","\u2061","\u3164","\u2062"],1:["\u2061","\u3164","\u2062","\u2063"],2:["\u2060","\u2061","\u3164","\u2063"],3:["\u2060","\u3164","\u2062","\u2063"],};var nowDate=+new Date();var endDate=+new Date("2020-1-7 23:59:59");Jbtn.addEventListener("click",function(){if(nowDate<endDate){var v=Jipt.value.trim();wordLength=getLength(v);console.log(wordLength,"wordLength");if(wordLength>0){if(wordLength<=10){var _html="";for(var i=0;i<12;i++){_html+='<li class="res-item"><input class="res-ipt" type="text" value="'+gen(v)+'"></li>'}Jol.innerHTML=_html;Jres.style.display="block"}else{alert("字数已超过最大长度")}}else{var index=Math.floor(Math.random()*4);var _html="";for(var i=0;i<12;i++){_html+='<li class="res-item"><input class="res-ipt" type="text" value="'+genEmpty(blankStr[index])+'"></li>'}Jol.innerHTML=_html;Jres.style.display="block"}}else{alert("有效时间已过，请联系续费再用!")}});
 
-    function rdIndex(length){
-      return Math.floor(Math.random()*(length))
-    }
-
-    function gen(v){
-      var pre = v.split('#');  //原始值
-      console.log(pre,"pre");
-      var demand = 0;
-      if (pre.length>1) {
-        var o = pre[0].split('')
-        //typeof NaN === 'number'
-        !!+pre[1] ? (demand = pre[1]) :(demand = 3);
-      }else{
-        var o = v.split('');
-        demand = 3;
-      }
-      // 按需求插入个数
-      for (var i = 0; i <demand; i++) {
-        var index = rdIndex(o.length+1);
-        // 随机取一个字符插入, PS, 一旦选出, _clone会被修改, 必须还原
-        var _clone = clone(spStr);
-        var _pick  = _clone.splice(rdIndex(_clone.length),1).toString();
-        o.splice(index,0,_pick); // o都原始值会被修改
-        var res  = transfer(o.join(''));
-      }
-      console.log('最终值:',res);
-      return res;
-    }
-
-    function genEmpty(){
-      // 全空白
-      var arr = [];
-      for (var i = 0; i <6; i++) {
-        var _clone = clone(spStr);
-        var _pick  = _clone.splice(rdIndex(_clone.length),1).toString();
-        arr.push(_pick)
-      }
-      var res = arr.join('');
-      console.log(res,"res");
-      return res;
-    };
-
-    // var spStr = ['\u200a','\u2060','\u2061','\u2062','\u2063'];
-    var spStr = ['\u2060','\u2061','\u2062','\u2063'];
-    // var spStr = ['a','b','c','d','e'];
-
-    Jbtn.addEventListener('click',function(){
-      var v = Jipt.value.trim();
-      if(!!v){
-        var _html = '';
-        for (var i = 0; i < 12; i++) {
-          _html+='<li class="res-item"><input class="res-ipt" type="text" value="'+ (v.indexOf('$')>-1 ? genEmpty(): gen(v))+'"></li>';
-        }
-        Jol.innerHTML = _html;
-        Jres.style.display="block";
-      }else{
-        alert('不能为空!')
-      }
-    })
-
-
-  </script>
+	</script>
 </body>
 </html>

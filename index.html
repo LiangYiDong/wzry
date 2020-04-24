@@ -167,21 +167,29 @@
 		    return shuffled.slice(min);
 		};
 		function genQuanEmpty(w) {
-		    // var as = String(w);
-		    var res = w.join("");
+		    var _clone = clone(w);
+		    var res = _clone.join("");
 		    // console.log(as,"这里");
 		    return res
 		};
+		function randArr(arr) {  //打乱数组
+		    for (var i = 0; i < arr.length; i++) {
+		        var iRand = parseInt(arr.length * Math.random());
+		        var temp = arr[i];
+		        arr[i] = arr[iRand];
+		        arr[iRand] = temp;
+		    }
+		    return arr;
+		}
 		Bbtn.addEventListener("click",function(){
-			var a1 = ["\u2060", "\u2061", "\u2062", "\u2063"];
+			var a1 = ["\u2060","\u2061","\u2062","\u2063"];
 			var a2 = ["\u007f","\u007f","\u007f","\u007f","\u007f","\u007f"];
 			var dd  = getRandomArrayElements(a1,3)
             var _html = "";
             for (var i = 0; i < 12; i++) {
-				var cc = a2.concat(dd).sort(function() {
-				    return .5 - Math.random();
-				});
-                _html += '<li class="res-item"><input class="res-ipt" type="text" value="' + genQuanEmpty(cc) + '"></li>'
+				var cc = a2.concat(dd);
+				var endArr = randArr(cc);
+                _html += '<li class="res-item"><input class="res-ipt" type="text" value="' + genQuanEmpty(endArr) + '"></li>'
             }
             Jol.innerHTML = _html;
             Jres.style.display = "block"
